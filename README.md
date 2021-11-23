@@ -2,6 +2,8 @@
 
 vue3-template-ssr
 
+基于Vue3的ssr，状态管理建议用pinia🤔
+
 
 ## npm i
 
