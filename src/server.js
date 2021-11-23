@@ -13,7 +13,6 @@ server.use("/favicon.ico", express.static(path.join(__dirname, "../dist", "favic
 
 const appPath = path.join(__dirname, "../dist", "", manifest["app.js"]);
 const createApp = require(appPath).default;
-const cssString = fs.readFileSync(path.join(__dirname, "../dist", manifest["app.css"]));
 
 server.get("*", async (req, res) => {
   const { app, router } = createApp();
@@ -27,22 +26,9 @@ server.get("*", async (req, res) => {
     if (err) {
       throw err;
     }
-    const html = `
-        <html>
-            <head>
-            <title>Hello</title>
-            <style>
-            ${cssString}
-            </style>
-            </head>
-            <body>
-            ${appContent}
-            </body>
-        </html>
-
-        `;
+    htmlExt = htmlExt.toString().replace('<div id="app">', `<div id="app">${appContent}`);
     res.setHeader("Content-Type", "text/html");
-    res.send(html);
+    res.send(htmlExt);
   });
 });
 
